@@ -26,7 +26,11 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.Properties;
+
+import org.jboss.el.cache.FactoryFinderCache;
 
 class FactoryFinder {
 
@@ -80,34 +84,24 @@ class FactoryFinder {
     static Object find(String factoryId, String fallbackClassName, Properties properties) {
         ClassLoader classLoader;
         try {
+            if (System.getSecurityManager() == null) {
             classLoader = Thread.currentThread().getContextClassLoader();
+            } else {
+                classLoader = AccessController.doPrivileged(
+                        new PrivilegedAction<ClassLoader>() {
+                            public ClassLoader run() {
+                                return Thread.currentThread().getContextClassLoader();
+                            }
+                        });
+            }
         } catch (Exception x) {
             throw new ELException(x.toString(), x);
         }
 
-        String serviceId = "META-INF/services/" + factoryId;
-
-        // try to find services in CLASSPATH
-        try {
-            InputStream is = null;
-            if (classLoader == null) {
-                is = ClassLoader.getSystemResourceAsStream(serviceId);
-            } else {
-                is = classLoader.getResourceAsStream(serviceId);
+        final String deploymentFactoryClassName = FactoryFinderCache.loadImplementationClassName(factoryId, classLoader);
+        if(deploymentFactoryClassName != null && !deploymentFactoryClassName.equals("")) {
+            return newInstance(deploymentFactoryClassName, classLoader, properties);
             }
-
-            if (is != null) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-
-                String factoryClassName = reader.readLine();
-                reader.close();
-
-                if (factoryClassName != null && !"".equals(factoryClassName)) {
-                    return newInstance(factoryClassName, classLoader, properties);
-                }
-            }
-        } catch (Exception ex) {
-        }
 
         // Try to read from $java.home/lib/el.properties
         try {

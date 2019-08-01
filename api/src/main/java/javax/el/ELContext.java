@@ -436,13 +436,7 @@ public abstract class ELContext {
         } finally {
             setPropertyResolved(propertyResolvedSave);
         }
-
-        ExpressionFactory exprFactory = (ExpressionFactory) getContext(ExpressionFactory.class);
-        if (exprFactory == null) {
-            exprFactory = ELUtil.getExpressionFactory();
-        }
-
-        return exprFactory.coerceToType(obj, targetType);
+        return ELUtil.getExpressionFactory().coerceToType(obj, targetType);
     }
 
 }

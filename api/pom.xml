@@ -20,19 +20,17 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     
-    <modelVersion>4.0.0</modelVersion>
-    
     <parent>
-        <groupId>org.eclipse.ee4j</groupId>
-        <artifactId>project</artifactId>
-        <version>1.0.5</version>
-        <relativePath/>
+    <groupId>org.jboss</groupId>
+    <artifactId>jboss-parent</artifactId>
+    <version>35</version>
     </parent>
     
-    <groupId>jakarta.el</groupId>
-    <artifactId>jakarta.el-api</artifactId>
-    <version>3.0.3-SNAPSHOT</version>
-    
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jboss.spec.javax.el</groupId>
+    <artifactId>jboss-el-api_3.0_spec</artifactId>
+    <version>2.0.0.Final-SNAPSHOT</version>
+    <packaging>jar</packaging>    
     <name>Jakarta Expression Language 3.0 API</name>
     <description>
         Jakarta Expression Language defines an expression language for Java applications
@@ -64,42 +62,13 @@
         </license>
     </licenses>
     
-    <issueManagement>
-        <system>github</system>
-        <url>https://github.com/eclipse-ee4j/el-ri/issues</url>
-    </issueManagement>
-    
-    <mailingLists>
-        <mailingList>
-            <name>Jakarta Expression Language mailing list</name>
-            <post>el-dev@eclipse.org</post>
-            <subscribe>https://dev.eclipse.org/mailman/listinfo/el-dev</subscribe>
-            <unsubscribe>https://dev.eclipse.org/mailman/listinfo/el-dev</unsubscribe>
-            <archive>https://dev.eclipse.org/mhonarc/lists/el-dev</archive>
-        </mailingList>
-    </mailingLists>
-    
     <scm>
-        <connection>scm:git:https://github.com/eclipse-ee4j/el-ri.git</connection>
-        <developerConnection>scm:git:git@github.com:eclipse-ee4j/el-ri.git</developerConnection>
+      <connection>scm:git:git@github.com:jboss/jboss-jakarta-el-api_spec.git</connection>
+      <developerConnection>scm:git:git@github.com:jboss/jboss-jakarta-el-api_spec.git</developerConnection>
         <url>https://github.com/eclipse-ee4j/el-ri</url>
         <tag>HEAD</tag>
     </scm>
 
-    <developers>
-        <developer>
-            <id>yaminikb</id>
-            <name>Yamini K B</name>
-            <organization>Oracle Corporation</organization>
-            <organizationUrl>http://www.oracle.com/</organizationUrl>
-        </developer>
-    </developers>
-
-    <contributors>
-        <contributor>
-            <name>Kin-man Chung</name>
-        </contributor>
-    </contributors>
 
     <build>
         <resources>

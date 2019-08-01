@@ -112,6 +112,7 @@ public class LambdaExpression {
         }
 
         elContext.enterLambdaScope(lambdaArgs);
+        try {
         Object ret = expression.getValue(elContext);
 
         // If the result of evaluating the body is another LambdaExpression,
@@ -123,9 +124,11 @@ public class LambdaExpression {
         if (ret instanceof LambdaExpression) {
             ((LambdaExpression) ret).envirArgs.putAll(lambdaArgs);
         }
-        elContext.exitLambdaScope();
-
         return ret;
+        }
+        finally {
+            elContext.exitLambdaScope();
+        }
     }
 
     /**
