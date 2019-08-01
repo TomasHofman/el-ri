@@ -188,8 +188,10 @@ public class ArrayELResolver extends ELResolver {
                 throw new PropertyNotWritableException();
             }
             Class<?> type = base.getClass().getComponentType();
-            if (val != null && !type.isAssignableFrom(val.getClass())) {
-                throw new ClassCastException();
+            if (val != null && !Util.isAssignableFrom(val.getClass(), type)) {
+                throw new ClassCastException(Util.message(context,
+                        "objectNotAssignable", val.getClass().getName(),
+                        type.getName()));
             }
             int index = toInteger(property);
             if (index < 0 || index >= Array.getLength(base)) {

@@ -23,6 +23,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +48,7 @@ import java.util.ResourceBundle;
  * @author Dongbin Nie
  */
 class ELUtil {
+    private static final String EL_BC22_PROPERTY= "org.wildfly.el.bc2.2";
 
     /**
      * This class may not be constructed.
@@ -53,11 +56,23 @@ class ELUtil {
     private ELUtil() {
     }
 
-    /*
-     * For testing Backward Compatibility option static java.util.Properties properties = new java.util.Properties(); static
-     * { properties.setProperty("javax.el.bc2.2", "true"); }
-     */
-    public static ExpressionFactory exprFactory = ExpressionFactory.newInstance(/* properties */);
+    static final java.util.Properties properties = new java.util.Properties();
+    private static ExpressionFactory exprFactory = null;
+    static {
+        setupProperties();
+    }
+
+    private static void setupProperties(){
+        boolean bc22Enabled = AccessController.doPrivileged(new PrivilegedAction<Boolean>() {
+            public Boolean run() {
+                return Boolean.getBoolean(EL_BC22_PROPERTY);
+            }
+
+        });
+        if (bc22Enabled) {
+            properties.setProperty("javax.el.bc2.2", "true");
+        }
+    }
 
     /**
      * <p>
@@ -166,6 +181,9 @@ class ELUtil {
     }
 
     static ExpressionFactory getExpressionFactory() {
+        if (exprFactory == null){
+            exprFactory = ExpressionFactory.newInstance(properties);
+        }
         return exprFactory;
     }
 
@@ -217,6 +235,8 @@ class ELUtil {
         return method;
     }
 
+/*TODO:  Verify if Jakarta or older JBoss spec fork copy of below code is better */ 
+
     /*
      * This method duplicates code in com.sun.el.util.ReflectionUtil. When making changes keep the code in sync.
      */
@@ -248,7 +268,7 @@ class ELUtil {
 
         Method[] methods = clazz.getMethods();
 
-        List<Wrapper> wrappers = Wrapper.wrap(methods, methodName);
+        List<Wrapper> wrappers = Wrapper.wrap(clazz, methods, methodName);
 
         Wrapper result = findWrapper(clazz, wrappers, methodName, paramTypes, paramValues);
 
@@ -702,10 +722,12 @@ class ELUtil {
      */
     private abstract static class Wrapper {
 
-        public static List<Wrapper> wrap(Method[] methods, String name) {
+        public static List<Wrapper> wrap(Class<?> clazz, Method[] methods, String name) {
             List<Wrapper> result = new ArrayList<>();
             for (Method method : methods) {
-                if (method.getName().equals(name)) {
+                if (method.getName().equals(name)
+                        // bridge check added for https://issues.jboss.org/browse/JBEE-165
+                        && !(method.isBridge() && !method.getDeclaringClass().equals(clazz))) {
                     result.add(new MethodWrapper(method));
                 }
             }
