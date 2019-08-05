@@ -42,7 +42,7 @@
         <spec.version>3.0</spec.version>
         <bundle.version>3.0.3</bundle.version>
         <extensionName>javax.el</extensionName>
-        <bundle.symbolicName>javax.el-api</bundle.symbolicName>
+        <bundle.symbolicName>com.sun.el.javax.el</bundle.symbolicName>
         <vendorName>Oracle Corporation</vendorName>
         <findbugs.version>2.4.0</findbugs.version>
         <findbugs.exclude />
@@ -101,8 +101,13 @@
                 </configuration>
             </plugin>
         
+            <!-- 
+                Configure maven-bundle-plugin to generate OSGi manifest. 
         
-            <!-- Creates the OSGi MANIFEST.MF file -->        
+                Please note: we use the manifest goal only and not the bundle goal. 
+                The bundle goal can lead to very surprising results if the package names are not correctly specified. 
+                So, we use the jar plugin to generate the jar. 
+            -->
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -112,7 +117,11 @@
                         <supportedProjectType>jar</supportedProjectType>
                     </supportedProjectTypes>
                     <instructions>
-                        <Bundle-Description>Jakarta Expression Language ${spec.version}</Bundle-Description>
+                        <Bundle-Description>
+                            Expression Language ${spec.version} API and Implementation
+
+                        </Bundle-Description>
+
                         <Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
                         <Bundle-Version>${bundle.version}</Bundle-Version>
                         <Extension-Name>${extensionName}</Extension-Name>
@@ -120,7 +129,6 @@
                         <Specification-Vendor>${vendorName}</Specification-Vendor>
                         <Implementation-Version>${project.version}</Implementation-Version>
                         <Implementation-Vendor>${vendorName}</Implementation-Vendor>
-                        <Export-Package>javax.el</Export-Package>
                     </instructions>
                 </configuration>
                 <executions>
