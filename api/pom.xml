@@ -65,7 +65,7 @@
     <scm>
       <connection>scm:git:git@github.com:jboss/jboss-jakarta-el-api_spec.git</connection>
       <developerConnection>scm:git:git@github.com:jboss/jboss-jakarta-el-api_spec.git</developerConnection>
-        <url>https://github.com/eclipse-ee4j/el-ri</url>
+        <url>https://github.com/jboss/jboss-jakarta-el-api_spec</url>
         <tag>HEAD</tag>
     </scm>
 
