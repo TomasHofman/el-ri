@@ -111,11 +111,15 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>1.4.3</version>
                 <configuration>
                     <supportedProjectTypes>
                         <supportedProjectType>jar</supportedProjectType>
                     </supportedProjectTypes>
+                    <archive>
+                        <manifestEntries>
+                        <Automatic-Module-Name>beta.jboss.el.api_3_0</Automatic-Module-Name>
+                        </manifestEntries>
+                    </archive>
                     <instructions>
                         <Bundle-Description>
                             Expression Language ${spec.version} API and Implementation
