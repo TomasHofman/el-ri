@@ -21,6 +21,8 @@ import static java.lang.reflect.Modifier.isAbstract;
 import static java.lang.reflect.Modifier.isInterface;
 import static java.lang.reflect.Modifier.isPublic;
 
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -151,8 +153,20 @@ public class ImportHandler {
 
     private Class<?> getClassFor(String className) {
         if (!notAClass.contains(className)) {
+            ClassLoader classLoader;
             try {
-                return Class.forName(className, false, Thread.currentThread().getContextClassLoader());
+                if (System.getSecurityManager() == null) {
+                classLoader = Thread.currentThread().getContextClassLoader();
+                } else {
+                    classLoader = AccessController.doPrivileged(
+                            new PrivilegedAction<ClassLoader>() {
+                                public ClassLoader run() {
+                                    return Thread.currentThread().getContextClassLoader();
+                                }
+                            });
+                }
+
+                return Class.forName(className, false, classLoader);
             } catch (ClassNotFoundException ex) {
                 notAClass.add(className);
             }
