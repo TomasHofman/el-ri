@@ -118,8 +118,12 @@
                     </supportedProjectTypes>
                     <archive>
                         <manifestEntries>
-                        <Automatic-Module-Name>beta.jboss.el.api_3_0</Automatic-Module-Name>
+                            <Automatic-Module-Name>beta.jboss.el.api_3_0</Automatic-Module-Name>
                         </manifestEntries>
+                        <manifest>
+                            <addDefaultSpecificationEntries>false</addDefaultSpecificationEntries>
+                            <addDefaultImplementationEntries>false</addDefaultImplementationEntries>
+                        </manifest>
                     </archive>
                     <instructions>
                         <Bundle-Description>
@@ -168,6 +172,9 @@
                 <version>3.0.1</version>
                 <configuration>
                     <includePom>true</includePom>
+                    <archive>
+                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
                 </configuration>
                 <executions>
                     <execution>
@@ -213,6 +220,9 @@ Use is subject to <a href="{@docRoot}/doc-files/speclicense.html" target="_top">
                                     </packages>
                                 </group>
                             </groups>
+                            <archive>
+                                <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                            </archive>
                         </configuration>
                     </execution>
                 </executions>
