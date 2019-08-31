@@ -259,7 +259,7 @@
                             </links>
                             <groups>
                                 <group>
-                                    <title>Jakarta Expression Language 3.0 API and Implementation</title>
+                                    <title>Expression Language 3.0 API</title>
                                     <packages>com.sun.el</packages>
                                 </group>
                             </groups>
