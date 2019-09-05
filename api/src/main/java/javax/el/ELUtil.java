@@ -235,8 +235,6 @@ class ELUtil {
         return method;
     }
 
-/*TODO:  Verify if Jakarta or older JBoss spec fork copy of below code is better */ 
-
     /*
      * This method duplicates code in com.sun.el.util.ReflectionUtil. When making changes keep the code in sync.
      */

@@ -32,7 +32,7 @@
     
     <name>Jakarta Expression Language 3.0</name>
     <description>
-        Jakarta Expression Language provides a specification document, API, reference implementation and TCK 
+        Jakarta Expression Language provides an API 
         that describes an expression language for Java applications.
     </description>
     <url>https://projects.eclipse.org/projects/ee4j.el</url>
@@ -176,7 +176,7 @@
                     <instructions>
                         <Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
                         <Bundle-Description>
-                            Expression Language ${spec.version} API and Implementation
+                            Expression Language ${spec.version} API
 
                         </Bundle-Description>
                         <Bundle-Version>${bundle.version}</Bundle-Version>
