@@ -116,8 +116,8 @@
         </dependency>
         <dependency>
 	    <groupId>org.glassfish</groupId>
-            <artifactId>javax.el-impl</artifactId>
-            <version>3.0.1-b08-jbossorg-1</version>
+            <artifactId>javax.el</artifactId>
+            <version>3.0.1-b08</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
