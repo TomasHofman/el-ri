@@ -66,6 +66,11 @@
             <url>http://www.apache.org/licenses/LICENSE-2.0</url>
             <distribution>repo</distribution>
         </license>
+       <license>
+            <name>LGPL 2.1 or later</name>
+            <url><http://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html/url>
+            <distribution>repo</distribution>
+        </license>
     </licenses>
     
     <scm>
