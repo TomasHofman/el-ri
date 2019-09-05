@@ -68,7 +68,7 @@
         </license>
        <license>
             <name>LGPL 2.1 or later</name>
-            <url><http://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html/url>
+            <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
