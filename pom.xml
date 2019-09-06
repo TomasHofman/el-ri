@@ -28,6 +28,7 @@
 
     <groupId>org.jboss.spec.javax.el</groupId>
     <artifactId>jboss-el-api_3.0_spec</artifactId>
+    <packaging>pom</packaging>
     <version>2.0.0.CR1-SNAPSHOT</version>
     
     <name>Jakarta Expression Language 3.0</name>
@@ -106,7 +107,11 @@
         <url>https://github.com/jboss/jboss-jakarta-el-api_spec</url>
         <tag>HEAD</tag>
     </scm>
-    
+
+    <modules>
+        <module>api</module>
+    </modules>
+ 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
