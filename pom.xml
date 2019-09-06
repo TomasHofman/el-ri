@@ -231,54 +231,6 @@
                 </configuration>
             </plugin>
 
-            <!-- Creates the source jar -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version> 2.2.1 </version>
-                <configuration>
-                    <includePom>true</includePom>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Creates the javadoc jar -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <source>1.7</source>
-                            <sourcepath>api/src;impl/src</sourcepath>
-                            <additionalJOption>-Xdoclint:none</additionalJOption>
-                            <links>
-                                <link>https://javaee.github.io/javaee-spec/javadocs/</link>
-                            </links>
-                            <groups>
-                                <group>
-                                    <title>Expression Language 3.0 API</title>
-                                    <packages>com.sun.el</packages>
-                                </group>
-                            </groups>
-                            <bottom> Copyright (c) 2013 Oracle and/or its affiliates. All Rights Reserved. Use is subject to license terms. </bottom>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            
             <!-- Use ant to manually invoke javacc, as this required is very infrequently <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>javacc-maven-plugin</artifactId> 
                 <version>2.6</version> <executions> <execution> <id>jjtree-javacc</id> <goals> <goal>jjtree-javacc</goal> </goals> <configuration> <sourceDirectory>src/main/java/com/sun/el/parser</sourceDirectory> 
                 <outputDirectory>src/main/java/com/sun/el/parser</outputDirectory> </configuration> </execution> </executions> </plugin> -->
