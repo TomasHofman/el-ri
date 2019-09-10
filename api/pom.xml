@@ -45,8 +45,8 @@
         <extensionName>javax.el</extensionName>
         <bundle.symbolicName>com.sun.el.javax.el</bundle.symbolicName>
         <vendorName>Oracle Corporation</vendorName>
-        <findbugs.version>2.4.0</findbugs.version>
-        <findbugs.exclude />
+        <findbugs.version>2.5.2</findbugs.version>
+        <findbugs.exclude>exclude.xml</findbugs.exclude>
         <findbugs.threshold>High</findbugs.threshold>
     </properties>
 
@@ -80,6 +80,20 @@
         <tag>HEAD</tag>
     </scm>
 
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+	    <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>3.0.1-b08</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <resources>
@@ -147,7 +161,7 @@
                         <Specification-Version>${spec.version}</Specification-Version>
                         <Specification-Vendor>${vendorName}</Specification-Vendor>
                         <Implementation-Version>${project.version}</Implementation-Version>
-                        <Implementation-Vendor>${vendorName}</Implementation-Vendor>
+                        <Implementation-Vendor>JBoss by Red Hat</Implementation-Vendor>
                     </instructions>
                 </configuration>
                 <executions>
