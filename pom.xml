@@ -35,6 +35,21 @@
         <module>api</module>
     </modules>
 
+    <developers>
+        <developer>
+            <id>yaminikb</id>
+            <name>Yamini K B</name>
+            <organization>Oracle Corporation</organization>
+            <organizationUrl>http://www.oracle.com/</organizationUrl>
+        </developer>
+    </developers>
+
+    <contributors>
+        <contributor>
+            <name>Kin-man Chung</name>
+        </contributor>
+    </contributors>
+
     <licenses>
         <license>
             <name>EPL 2.0</name>

@@ -80,21 +80,6 @@
         <tag>HEAD</tag>
     </scm>
 
-    <developers>
-        <developer>
-            <id>yaminikb</id>
-            <name>Yamini K B</name>
-            <organization>Oracle Corporation</organization>
-            <organizationUrl>http://www.oracle.com/</organizationUrl>
-        </developer>
-    </developers>
-
-    <contributors>
-        <contributor>
-            <name>Kin-man Chung</name>
-        </contributor>
-    </contributors>
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
