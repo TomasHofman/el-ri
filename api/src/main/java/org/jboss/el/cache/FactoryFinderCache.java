@@ -41,7 +41,7 @@ public class FactoryFinderCache {
      * implementation to look it up on every call.
      *
      * @param classLoader      The deployments class loader
-     * @param factoryId        The type of factory that is being recorded (at this stage only javax.el.ExpressionFactory has any effect
+     * @param factoryId        The type of factory that is being recorded (at this stage only jakarta.el.ExpressionFactory has any effect
      * @param factoryClassName The name of the factory class that is present in the deployment, or null if none is present
      */
     public static void addCacheEntry(final ClassLoader classLoader, final String factoryId, final String factoryClassName) {
