@@ -23,7 +23,7 @@
     <parent>
     <groupId>org.jboss.spec.jakarta.el</groupId>
     <artifactId>jboss-el-api_4.0_spec-parent</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
     </parent>
     
