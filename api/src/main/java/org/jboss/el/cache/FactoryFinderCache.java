@@ -25,9 +25,11 @@ package org.jboss.el.cache;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.Class;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.ServiceLoader;
 
 /**
  * @author Stuart Douglas
@@ -82,30 +84,21 @@ public class FactoryFinderCache {
             }
         }
 
-        String serviceId = "META-INF/services/" + factoryId;
+        Object result = null;
         // try to find services in CLASSPATH
         try {
-            InputStream is = null;
-            if (classLoader == null) {
-                is = ClassLoader.getSystemResourceAsStream(serviceId);
-            } else {
-                is = classLoader.getResourceAsStream(serviceId);
+            Class factoryClass = Class.forName(factoryId);
+            ServiceLoader<Object> serviceLoader = ServiceLoader.load(factoryClass, classLoader);
+            Iterator<Object> iter = serviceLoader.iterator();
+            while (result == null && iter.hasNext()) {
+                result = iter.next();
             }
 
-            if (is != null) {
-                BufferedReader rd =
-                        new BufferedReader(new InputStreamReader(is, "UTF-8"));
-
-                String factoryClassName = rd.readLine();
-                rd.close();
-
-                if (factoryClassName != null &&
-                        !"".equals(factoryClassName)) {
-                    if (classCache != null) {
-                        classCache.put(new CacheKey(classLoader, factoryId), factoryClassName);
-                    }
-                    return factoryClassName;
+            if (result != null) {
+                if (classCache != null) {
+                    classCache.put(new CacheKey(classLoader, factoryId), result.getClass().getName());
                 }
+                return result.getClass().getName();
             }
         } catch (Exception ex) {
         }
