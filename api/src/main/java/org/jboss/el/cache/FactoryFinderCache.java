@@ -22,11 +22,12 @@
 
 package org.jboss.el.cache;
 
-import java.lang.Class;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.ServiceLoader;
 
 /**
  * @author Stuart Douglas
@@ -81,21 +82,34 @@ public class FactoryFinderCache {
             }
         }
 
-        Object result = null;
+        String serviceId = "META-INF/services/" + factoryId;
         // try to find services in CLASSPATH
         try {
-            Class factoryClass = Class.forName(factoryId);
-            ServiceLoader<Object> serviceLoader = ServiceLoader.load(factoryClass, classLoader);
-            Iterator<Object> iter = serviceLoader.iterator();
-            while (result == null && iter.hasNext()) {
-                result = iter.next();
+            InputStream is = null;
+            if (classLoader == null) {
+                is = ClassLoader.getSystemResourceAsStream(serviceId);
+            } else {
+                is = classLoader.getResourceAsStream(serviceId);
             }
 
-            if (result != null) {
-                if (classCache != null) {
-                    classCache.put(new CacheKey(classLoader, factoryId), result.getClass().getName());
+            if (is != null) {
+                BufferedReader rd =
+                        new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+                String factoryClassName;
+                do {
+                    factoryClassName = sanitize(rd.readLine());
+                } while (factoryClassName != null && factoryClassName.isEmpty());
+
+                rd.close();
+
+                if (factoryClassName != null &&
+                        !"".equals(factoryClassName)) {
+                    if (classCache != null) {
+                        classCache.put(new CacheKey(classLoader, factoryId), factoryClassName);
+                    }
+                    return factoryClassName;
                 }
-                return result.getClass().getName();
             }
         } catch (Exception ex) {
         }
@@ -103,6 +117,28 @@ public class FactoryFinderCache {
             classCache.put(new CacheKey(classLoader, factoryId), "");
         }
         return null;
+    }
+
+    static String sanitize(String line) {
+        if (line == null) {
+            return null;
+        }
+
+        // strip comment
+        int idx = line.indexOf('#');
+        if (idx >= 0) {
+            line = line.substring(0, idx);
+        }
+
+        // strip spaces and tabs
+        while (line.startsWith(" ") || line.startsWith("\t")) {
+            line = line.substring(1);
+        }
+        while (line.endsWith(" ") || line.endsWith("\t")) {
+            line = line.substring(0, line.length() - 1);
+        }
+
+        return line;
     }
 
     private static class CacheKey {
